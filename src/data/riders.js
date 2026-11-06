@@ -1,9 +1,12 @@
+// showName: si se muestra el nombre de su onda mientras jugás
+// productInfo: si las tarjetas de producto tienen el botón "+ INFO" (solo en los primeros riders)
 export const riders = [
   {
     id: 'rider-01',
     number: '01',
     name: 'FREERIDE',
     showName: true,
+    productInfo: true,
     products: [
       'jacket-1', 'jacket-2', 'jacket-3', 'jacket-4',
       'pants-1', 'pants-2', 'pants-3', 'pants-4',
@@ -42,6 +45,7 @@ export const riders = [
     number: '02',
     name: 'PARK',
     showName: true,
+    productInfo: true,
     products: [
       'jacket-1', 'jacket-2', 'jacket-3', 'jacket-4', 'jacket-5',
       'pants-1', 'pants-2', 'pants-3', 'pants-4', 'pants-5',
@@ -84,6 +88,7 @@ export const riders = [
     number: '03',
     name: 'OLD SCHOOL',
     showName: false,
+    productInfo: false,
     products: [
       'jacket-1', 'jacket-2', 'jacket-3', 'jacket-4', 'jacket-5', 'jacket-6',
       'pants-1', 'pants-2', 'pants-3', 'pants-4', 'pants-5', 'pants-6',
@@ -130,6 +135,7 @@ export const riders = [
     number: '04',
     name: 'STREET',
     showName: false,
+    productInfo: false,
     products: [
       'jacket-1', 'jacket-2', 'jacket-3', 'jacket-4', 'jacket-5', 'jacket-6', 'jacket-7',
       'pants-1', 'pants-2', 'pants-3', 'pants-4', 'pants-5', 'pants-6', 'pants-7',
@@ -180,6 +186,7 @@ export const riders = [
     number: '05',
     name: 'ROOKIE',
     showName: false,
+    productInfo: false,
     products: [
       'jacket-1', 'jacket-2', 'jacket-3', 'jacket-4', 'jacket-5', 'jacket-6', 'jacket-7', 'jacket-8',
       'pants-1', 'pants-2', 'pants-3', 'pants-4', 'pants-5', 'pants-6', 'pants-7', 'pants-8',
@@ -230,6 +237,11 @@ export const riders = [
     },
   },
 ]
+
+// Lo que se ve arriba del rider mientras jugás: su onda en los primeros niveles, secreta después
+export function getRiderLabel(rider) {
+  return rider.showName ? rider.name : 'ONDA SECRETA'
+}
 
 export function getRider(id) {
   return riders.find(rider => rider.id === id)

@@ -1,4 +1,5 @@
 import RiderLook from './RiderLook'
+import { getRiderLabel } from '../data/riders'
 
 function RiderPreview({ rider, selected, look }) {
   return (
@@ -10,7 +11,7 @@ function RiderPreview({ rider, selected, look }) {
       </div>
 
       <div className="rider-caption">
-        <span>{rider.number} · {rider.showName ? rider.name : '???'}</span>
+        <span>{rider.number} · {getRiderLabel(rider)}</span>
         <h2>¿QUÉ ONDA TIENE?</h2>
         <p>{rider.hint}</p>
       </div>

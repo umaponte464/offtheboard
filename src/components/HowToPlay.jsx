@@ -17,15 +17,15 @@ function HowToPlay() {
         </article>
         <article className="step">
           <span>02</span>
-          <div><h3>LEÉ AL RIDER</h3><p>Cada partida trae 5 riders, todos vestidos de negro. Mirá su pose, su actitud y dónde está. En cada nivel hay una prenda más para elegir por categoría, y desde el tercer rider no te dicen ni el nombre.</p></div>
+          <div><h3>LEÉ AL RIDER</h3><p>Cada partida trae 5 riders, todos vestidos de negro. Mirá su pose, su actitud y dónde está. En cada nivel hay una prenda más para elegir por categoría, y desde el tercer rider su onda es secreta.</p></div>
         </article>
         <article className="step">
           <span>03</span>
-          <div><h3>ARMÁ SU LOOK</h3><p>Elegí una campera, un pantalón, un calzado y un accesorio de Vans. Cada prenda que elegís aparece puesta en el rider.</p></div>
+          <div><h3>ARMÁ SU LOOK</h3><p>Elegí una campera, un pantalón, un calzado y un accesorio de Vans. Cada prenda que elegís aparece puesta en el rider. En los primeros riders, tocá + INFO para dar vuelta el producto y ver su onda.</p></div>
         </article>
         <article className="step">
           <span>04</span>
-          <div><h3>RECIBÍ EL VEREDICTO</h3><p>Cada producto tiene una nota según la onda del rider. Después de cada look ves su veredicto, y al final el promedio de los 5, de 0 a 10.</p></div>
+          <div><h3>RECIBÍ EL VEREDICTO</h3><p>Cada producto tiene una nota según la onda del rider. Después de cada look ves su veredicto, y al final el promedio de los 5, de 0 a 10. Antes del primer rider hay un tutorial con un ejemplo de puntaje.</p></div>
         </article>
       </div>
 

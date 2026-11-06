@@ -70,6 +70,47 @@ h1, h2, h3 { font-family: 'Archivo Black', sans-serif; margin-top: 0; }
 .game-heading div { display: flex; gap: 12px; align-items: baseline; }
 .game-heading span { font-size: 11px; letter-spacing: .15em; font-weight: 800; color: var(--muted); }
 .game-heading strong { font-family: 'Archivo Black'; }
+.tutorial-open { align-self: center; border: 1px solid var(--ink); background: transparent; color: var(--ink); padding: 6px 10px; font-size: 11px; font-weight: 800; letter-spacing: .12em; cursor: pointer; transition: background .15s ease, color .15s ease; }
+.tutorial-open:hover { background: var(--dark); color: white; }
+
+.tutorial { width: min(780px, calc(100% - 32px)); max-height: calc(100dvh - 32px); border: 0; padding: 32px; background: var(--cream); color: var(--ink); overflow-y: auto; }
+.tutorial::backdrop { background: rgba(21, 21, 29, .78); }
+.tutorial[open] { animation: layer-in .3s ease; }
+.tutorial-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.tutorial-top .eyebrow { margin: 0; }
+.tutorial-skip { border: 0; background: transparent; color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: .12em; cursor: pointer; padding: 6px 0; }
+.tutorial-skip:hover { color: var(--red); }
+.tutorial h2 { font-size: clamp(30px, 5vw, 50px); line-height: .95; margin: 14px 0 22px; }
+.tutorial-body { min-height: 330px; animation: layer-in .3s ease; }
+.tutorial-body p { margin: 0 0 16px; color: #45434b; line-height: 1.55; }
+.tutorial-split { display: grid; grid-template-columns: 210px 1fr; gap: 28px; align-items: start; }
+.tutorial-rider { aspect-ratio: 2 / 3; overflow: hidden; background: #0f1014; }
+.tutorial-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.tutorial-list li { padding: 12px 0; border-bottom: 1px solid var(--line); color: #45434b; font-size: 14px; line-height: 1.45; }
+.tutorial-list b { color: var(--ink); }
+.tutorial-examples { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.tutorial-examples li { display: grid; grid-template-columns: 64px 1fr auto; gap: 16px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.tutorial-example-image { width: 64px; height: 64px; background: #eae7e0; }
+.tutorial-example-image img { width: 100%; height: 100%; object-fit: contain; }
+.tutorial-examples strong { display: block; font-size: 14px; }
+.tutorial-examples li p { margin: 4px 0 0; font-size: 13px; line-height: 1.4; }
+.tutorial-examples b { min-width: 44px; text-align: right; font-family: 'Archivo Black'; font-size: 34px; }
+.tutorial-examples .hit b { color: var(--red); }
+.tutorial-examples .miss b { color: #a9a3a9; }
+.tutorial-scale { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin: 18px 0 0; padding: 0; list-style: none; background: var(--line); }
+.tutorial-scale li { background: #eeeae3; padding: 12px; }
+.tutorial-scale b { display: block; color: var(--red); font-family: 'Archivo Black'; font-size: 18px; }
+.tutorial-scale span { display: block; margin-top: 4px; font-size: 10px; font-weight: 800; letter-spacing: .1em; }
+.tutorial-levels { width: 100%; border-collapse: collapse; font-size: 14px; }
+.tutorial-levels th { padding: 8px 10px 8px 0; border-bottom: 2px solid var(--ink); color: var(--muted); font-size: 10px; letter-spacing: .14em; text-align: left; }
+.tutorial-levels td { padding: 12px 10px 12px 0; border-bottom: 1px solid var(--line); color: #45434b; }
+.tutorial-levels td:first-child { color: var(--red); font-family: 'Archivo Black'; }
+.tutorial-nav { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 26px; }
+.tutorial-dots { display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.tutorial-dots li { width: 26px; height: 4px; background: var(--line); transition: background .3s ease; }
+.tutorial-dots li.active { background: var(--red); }
+.tutorial-buttons { display: flex; align-items: center; gap: 22px; margin-left: auto; }
+.tutorial-buttons .app-button.text { margin-top: 0; }
 .round-track { display: flex; gap: 8px; list-style: none; margin: -15px 0 35px; padding: 0; }
 .round-track li { flex: 1; padding: 8px 10px; border-top: 4px solid var(--line); font-family: 'Archivo Black'; font-size: 13px; color: var(--muted); transition: border-color .3s ease, color .3s ease; }
 .round-track li.done { border-top-color: var(--dark); color: var(--dark); }
@@ -117,15 +158,34 @@ h1, h2, h3 { font-family: 'Archivo Black', sans-serif; margin-top: 0; }
 .catalog-section-title h3 { margin: 0; font-size: 17px; letter-spacing: .06em; }
 .catalog-section-title span { color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-.product-card { border: 1px solid #d8d2c9; background: #fff; padding: 0 0 15px; text-align: left; cursor: pointer; width: 100%; transition: transform .15s ease, box-shadow .15s ease; }
-.product-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(21, 21, 29, .08); }
-.product-card.selected { border: 3px solid var(--red); }
+.product-card { position: relative; perspective: 1200px; transition: transform .15s ease; }
+.product-card:hover { transform: translateY(-3px); }
+.product-card-inner { display: grid; height: 100%; transform-style: preserve-3d; transition: transform .55s cubic-bezier(.2, .7, .2, 1); }
+.product-card.flipped .product-card-inner { transform: rotateY(180deg); }
+.product-face { grid-area: 1 / 1; position: relative; border: 1px solid #d8d2c9; background: #fff; backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: box-shadow .15s ease; }
+.product-card:hover .product-face { box-shadow: 0 10px 24px rgba(21, 21, 29, .08); }
+.product-card.selected .product-face { border: 3px solid var(--red); }
+.product-select { display: block; width: 100%; height: 100%; border: 0; background: transparent; color: inherit; padding: 0 0 15px; text-align: left; cursor: pointer; }
 .product-image-wrap { position: relative; height: 210px; background: #eae7e0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .product-image-wrap img { width: 100%; height: 100%; object-fit: contain; }
 .product-check { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; display: grid; place-items: center; background: var(--red); color: white; font-weight: 800; }
-.product-card strong, .product-card small { display: block; padding: 0 14px; }
-.product-card strong { margin-top: 12px; }
-.product-card small { margin-top: 5px; color: var(--muted); font-size: 11px; letter-spacing: .08em; }
+.product-select strong, .product-select small { display: block; padding: 0 14px; }
+.product-select strong { margin-top: 12px; }
+.product-select small { margin-top: 5px; color: var(--muted); font-size: 11px; letter-spacing: .08em; }
+.product-info-toggle { position: absolute; top: 10px; left: 10px; border: 0; background: var(--dark); color: white; padding: 7px 10px; font-size: 10px; font-weight: 800; letter-spacing: .12em; cursor: pointer; transition: background .15s ease; }
+.product-info-toggle:hover { background: var(--red); }
+.product-back { transform: rotateY(180deg); background: var(--dark); color: white; padding: 16px 14px 14px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; }
+.product-back :focus-visible { outline-color: white; }
+.product-card.selected .product-back { border-color: var(--red); }
+.product-back-close { position: absolute; top: 8px; right: 8px; width: 30px; height: 30px; border: 1px solid #4a4a52; background: transparent; color: white; cursor: pointer; font-size: 13px; }
+.product-back-close:hover { border-color: white; }
+.product-back-label { padding-right: 36px; color: #c8c3bc; font-size: 10px; font-weight: 800; letter-spacing: .14em; }
+.product-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.product-tags li { background: var(--red); color: white; padding: 4px 8px; font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.product-back p { flex: 1; margin: 0; color: #e4e0da; font-size: 13px; line-height: 1.45; }
+.product-back-select { border: 0; background: white; color: var(--ink); padding: 11px; font-size: 12px; font-weight: 800; letter-spacing: .1em; cursor: pointer; }
+.product-back-select:hover { background: #eae7e0; }
+.product-card.selected .product-back-select { background: var(--red); color: white; }
 .hint { text-align: center; font-size: 12px; color: var(--muted); }
 .result { max-width: 1200px; margin: auto; }
 .result-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 55px; align-items: start; }
@@ -252,8 +312,30 @@ h1, h2, h3 { font-family: 'Archivo Black', sans-serif; margin-top: 0; }
   .result-rider-image { height: 360px; }
   .product-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
   .product-image-wrap { height: 150px; }
-  .product-card strong { font-size: 13px; padding: 0 10px; }
-  .product-card small { padding: 0 10px; font-size: 10px; }
+  .product-select strong { font-size: 13px; padding: 0 10px; }
+  .product-select small { padding: 0 10px; font-size: 10px; }
+  .product-info-toggle { top: 6px; left: 6px; padding: 6px 8px; }
+  .product-back { padding: 12px 10px 10px; gap: 8px; }
+  .product-back-label { display: none; }
+  .product-back-close { top: 6px; right: 6px; width: 28px; height: 28px; }
+  .product-tags { padding-right: 32px; gap: 4px; }
+  .product-tags li { font-size: 9px; padding: 3px 6px; }
+  .product-back p { font-size: 12px; line-height: 1.4; }
+  .product-back-select { padding: 9px; font-size: 11px; }
+  .tutorial { padding: 22px 18px; width: calc(100% - 20px); max-height: calc(100dvh - 20px); }
+  .tutorial-body { min-height: 0; }
+  .tutorial-split { grid-template-columns: 105px 1fr; gap: 14px; }
+  .tutorial-list li { padding: 9px 0; font-size: 13px; }
+  .tutorial-examples li { grid-template-columns: 48px 1fr auto; gap: 10px; }
+  .tutorial-example-image { width: 48px; height: 48px; }
+  .tutorial-examples b { font-size: 26px; min-width: 30px; }
+  .tutorial-scale { grid-template-columns: 1fr 1fr; }
+  .tutorial-levels { font-size: 12px; }
+  .tutorial-nav { flex-direction: column-reverse; align-items: stretch; }
+  .tutorial-dots { justify-content: center; }
+  .tutorial-buttons { margin-left: 0; justify-content: space-between; }
+  .tutorial-buttons .app-button.primary { flex: 1; text-align: center; padding: 14px 12px; }
+  .game-heading .tutorial-open { align-self: flex-start; margin-top: 6px; }
   .section-heading h2 { font-size: 30px; }
   .score-box strong { font-size: 60px; }
   .verdict-item { grid-template-columns: 46px 1fr auto; gap: 12px; }

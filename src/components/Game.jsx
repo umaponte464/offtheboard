@@ -3,8 +3,9 @@ import ProductSection from './ProductSection'
 import Button from './Button'
 import RiderPreview from './RiderPreview'
 import RoundResult from './RoundResult'
+import Tutorial from './Tutorial'
 import { categories, products } from '../data/products'
-import { riders } from '../data/riders'
+import { riders, getRiderLabel } from '../data/riders'
 import { scoreLook, scoreGame } from '../utils/score'
 
 function Game({ onFinish }) {
@@ -14,6 +15,7 @@ function Game({ onFinish }) {
   const [selected, setSelected] = useState([])
   const [activeCategory, setActiveCategory] = useState(categories[0].id)
   const [preview, setPreview] = useState(null)
+  const [showTutorial, setShowTutorial] = useState(true)
 
   const rider = riders[round]
   const isLastRider = round === riders.length - 1
@@ -79,10 +81,15 @@ function Game({ onFinish }) {
   return (
     <main className="game page">
       <div className="game-heading">
-        <div><span>RIDER</span><strong>{rider.number} · {rider.showName ? rider.name : '???'}</strong></div>
+        <div><span>RIDER</span><strong>{rider.number} · {getRiderLabel(rider)}</strong></div>
         <div><span>RONDA</span><strong>{round + 1} / {riders.length}</strong></div>
         <div><span>LOOK</span><strong>{selected.length} / {categories.length}</strong></div>
+        <button type="button" className="tutorial-open" onClick={() => setShowTutorial(true)}>
+          ? TUTORIAL
+        </button>
       </div>
+
+      {showTutorial && <Tutorial onClose={() => setShowTutorial(false)} />}
 
       <ol className="round-track" aria-label="Riders de la partida">
         {riders.map((item, index) => (
@@ -107,6 +114,7 @@ function Game({ onFinish }) {
 
           <p className="selection-instruction">
             Elegí 1 producto Vans por categoría. Mientras mirás las opciones, el rider se las va probando.
+            {rider.productInfo && ' Tocá + INFO para ver la onda de cada producto.'}
           </p>
 
           <div className="category-filters" role="group" aria-label="Filtrar productos por categoría">
@@ -136,6 +144,7 @@ function Game({ onFinish }) {
             selected={selected}
             onSelect={selectProduct}
             onPreview={setPreview}
+            showInfo={rider.productInfo}
           />
 
           <Button variant="primary full" disabled={!complete} onClick={confirmLook}>

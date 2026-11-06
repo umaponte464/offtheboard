@@ -1,6 +1,6 @@
 import ProductCard from './ProductCard'
 
-function ProductSection({ title, products, selected, onSelect, onPreview }) {
+function ProductSection({ title, products, selected, onSelect, onPreview, showInfo }) {
   return (
     <section className="catalog-section" aria-label={`Productos: ${title}`}>
       <div className="catalog-section-title">
@@ -16,6 +16,7 @@ function ProductSection({ title, products, selected, onSelect, onPreview }) {
             selected={selected.some(item => item.id === product.id)}
             onSelect={onSelect}
             onPreview={onPreview}
+            showInfo={showInfo}
           />
         ))}
       </div>

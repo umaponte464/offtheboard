@@ -48,11 +48,24 @@ Una partida son 5 riders seguidos. A más nivel, más productos para elegir y me
 
 | Rider | Nivel | Qué ves |
 |---|---|---|
-| 01 · FREERIDE | 1 | 4 opciones por categoría, nombre y una descripción clara de su onda |
-| 02 · PARK | 2 | 5 opciones por categoría, nombre y una descripción corta |
-| 03 · OLD SCHOOL | 3 | 6 opciones por categoría, sin nombre y con una pista rebuscada |
-| 04 · STREET | 4 | 7 opciones por categoría, sin nombre y con una pista rebuscada |
-| 05 · ROOKIE | 5 | 8 opciones por categoría, sin nombre y con una pista rebuscada |
+| 01 · FREERIDE | 1 | 4 opciones por categoría, su onda, una descripción clara y + INFO en los productos |
+| 02 · PARK | 2 | 5 opciones por categoría, su onda, una descripción corta y + INFO en los productos |
+| 03 · OLD SCHOOL | 3 | 6 opciones por categoría, "ONDA SECRETA" y una pista rebuscada |
+| 04 · STREET | 4 | 7 opciones por categoría, "ONDA SECRETA" y una pista rebuscada |
+| 05 · ROOKIE | 5 | 8 opciones por categoría, "ONDA SECRETA" y una pista rebuscada |
+
+### Tutorial
+
+Al entrar a `/jugar` se abre un tutorial de 4 pasos (`Tutorial.jsx`) antes del rider 01: cómo leer al rider, cómo probarle la ropa,
+un ejemplo de puntaje (un producto que es 10 y otro que es 3 para el rider 01) y cómo sube la dificultad.
+Se puede saltar, se cierra con Escape y se vuelve a abrir con el botón "? TUTORIAL" durante la partida.
+Usa la etiqueta `<dialog>` de HTML, que ya trae el foco atrapado adentro y el cierre con Escape.
+
+### + INFO en los productos
+
+En los riders 01 y 02 (`productInfo: true` en `riders.js`), cada producto tiene un botón "+ INFO" que da vuelta la tarjeta
+y muestra la onda del producto: etiquetas (`tags`) y una descripción corta (`info`), cargadas en `products.js`.
+Desde el rider 03 el botón desaparece: es parte de la dificultad, igual que la onda secreta.
 
 Mientras mirás los productos, el rider se los va probando (al pasar el mouse o el foco del teclado), y lo que elegís le queda puesto.
 Después de cada look aparece su veredicto (`RoundResult`) y se revela la onda del rider.

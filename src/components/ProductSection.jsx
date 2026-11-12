@@ -1,10 +1,10 @@
 import ProductCard from './ProductCard'
 
-function ProductSection({ title, products, selected, onSelect, onPreview, showInfo }) {
+function ProductSection({ title, products, selected, onSelect, onPreview, showInfo, titleRef }) {
   return (
     <section className="catalog-section" aria-label={`Productos: ${title}`}>
       <div className="catalog-section-title">
-        <h3>{title}</h3>
+        <h3 ref={titleRef} tabIndex={-1}>{title}</h3>
         <span>Elegí 1</span>
       </div>
 

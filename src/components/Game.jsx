@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ProductSection from './ProductSection'
 import Button from './Button'
 import RiderPreview from './RiderPreview'
@@ -16,24 +16,62 @@ function Game({ onFinish }) {
   const [activeCategory, setActiveCategory] = useState(categories[0].id)
   const [preview, setPreview] = useState(null)
   const [showTutorial, setShowTutorial] = useState(true)
+  const advanceTimer = useRef(null)
+  const catalogTitleRef = useRef(null)
+  const moveFocus = useRef(false)
 
   const rider = riders[round]
   const isLastRider = round === riders.length - 1
+
+  // Si el componente se desmonta con un salto pendiente, lo cancelamos
+  useEffect(() => () => clearTimeout(advanceTimer.current), [])
+
+  // Cuando el juego cambia solo de categoría, el foco va al título de la nueva (teclado y lectores de pantalla)
+  useEffect(() => {
+    if (moveFocus.current && catalogTitleRef.current) {
+      moveFocus.current = false
+      catalogTitleRef.current.focus({ preventScroll: true })
+      catalogTitleRef.current.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+    }
+  }, [activeCategory])
+
+  function changeCategory(categoryId) {
+    clearTimeout(advanceTimer.current)
+    setActiveCategory(categoryId)
+    setPreview(null)
+  }
+
+  // Busca la próxima categoría sin elegir, empezando por la que sigue a la actual
+  function goToNextCategory(currentCategory, nextSelected) {
+    const start = categories.findIndex(category => category.id === currentCategory)
+    const ordered = [...categories.slice(start + 1), ...categories.slice(0, start)]
+    const next = ordered.find(category => !nextSelected.some(item => item.category === category.id))
+    if (!next) return
+
+    clearTimeout(advanceTimer.current)
+    advanceTimer.current = setTimeout(() => {
+      moveFocus.current = true
+      changeCategory(next.id)
+    }, 450)
+  }
 
   function selectProduct(product) {
     setPreview(null)
     const sameCategory = selected.find(item => item.category === product.category)
 
-    if (sameCategory && sameCategory.id !== product.id) {
-      setSelected(selected.map(item => item.category === product.category ? product : item))
+    if (sameCategory && sameCategory.id === product.id) {
+      // Tocar la misma prenda la desmarca y te deja en la categoría
+      clearTimeout(advanceTimer.current)
+      setSelected(selected.filter(item => item.category !== product.category))
       return
     }
 
-    if (sameCategory) {
-      setSelected(selected.filter(item => item.category !== product.category))
-    } else {
-      setSelected([...selected, product])
-    }
+    const nextSelected = sameCategory
+      ? selected.map(item => item.category === product.category ? product : item)
+      : [...selected, product]
+
+    setSelected(nextSelected)
+    goToNextCategory(product.category, nextSelected)
   }
 
   function confirmLook() {
@@ -49,6 +87,7 @@ function Game({ onFinish }) {
       return
     }
 
+    clearTimeout(advanceTimer.current)
     setRound(round + 1)
     setSelected([])
     setActiveCategory(categories[0].id)
@@ -113,7 +152,7 @@ function Game({ onFinish }) {
           </div>
 
           <p className="selection-instruction">
-            Elegí 1 producto Vans por categoría. Mientras mirás las opciones, el rider se las va probando.
+            Elegí 1 producto Vans por categoría y pasás solo a la siguiente. Mientras mirás las opciones, el rider se las va probando.
             {rider.productInfo && ' Tocá + INFO para ver la onda de cada producto.'}
           </p>
 
@@ -126,10 +165,7 @@ function Game({ onFinish }) {
                   key={category.id}
                   className={activeCategory === category.id ? 'category-filter active' : 'category-filter'}
                   aria-pressed={activeCategory === category.id}
-                  onClick={() => {
-                    setActiveCategory(category.id)
-                    setPreview(null)
-                  }}
+                  onClick={() => changeCategory(category.id)}
                 >
                   {category.label}
                   {done && <span aria-label="elegido"> ✓</span>}
@@ -145,6 +181,7 @@ function Game({ onFinish }) {
             onSelect={selectProduct}
             onPreview={setPreview}
             showInfo={rider.productInfo}
+            titleRef={catalogTitleRef}
           />
 
           <Button variant="primary full" disabled={!complete} onClick={confirmLook}>

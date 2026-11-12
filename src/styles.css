@@ -156,6 +156,7 @@ h1, h2, h3 { font-family: 'Archivo Black', sans-serif; margin-top: 0; }
 .catalog-section { margin: 0 0 28px; }
 .catalog-section-title { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--line); padding-bottom: 9px; margin-bottom: 12px; }
 .catalog-section-title h3 { margin: 0; font-size: 17px; letter-spacing: .06em; }
+.catalog-section-title h3:focus:not(:focus-visible) { outline: none; }
 .catalog-section-title span { color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 .product-card { position: relative; perspective: 1200px; transition: transform .15s ease; }

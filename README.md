@@ -101,3 +101,19 @@ Las fotos de producto están en `public/products/`, así el juego no depende de 
 ## Stack
 
 React, React Router, Vite, CSS propio. Sin librerías extra.
+
+## Proceso con IA
+
+Usé la IA como copiloto: le pedía ayuda cuando no sabía cómo resolver algo puntual. La idea, la mecánica, la estética y las decisiones del juego fueron mías.
+
+**1. Que la ropa se vea puesta en el rider**
+
+> "No sé cómo hacer que la ropa que elijo se vea puesta en el rider sin sacar una foto por cada combinación."
+
+La solución fueron las capas: una foto base del rider vestido de negro y, encima, una imagen con fondo transparente por cada producto. El juego las apila en orden (calzado, pantalón, campera y accesorio), así cualquier combinación se arma sola. Además, con solo pasar el mouse por un producto, el rider ya se lo prueba.
+
+**2. Explicar los productos a quien no sabe de snow**
+
+> "¿Cómo le muestro a alguien que no sabe de snow qué producto va con cada onda, sin llenar la pantalla de texto?"
+
+Esto salió de la devolución de la preentrega. Lo resolví con tarjetas que se dan vuelta con el botón **+ INFO** y muestran dos etiquetas y una línea sobre el producto. Al principio pensé en que se dieran vuelta al pasar el mouse, pero eso ya lo usaba para probarle la ropa al rider y en el celular no existe, así que quedó como botón.
